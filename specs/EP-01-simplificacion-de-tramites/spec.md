@@ -22,7 +22,7 @@ Digitalizar y unificar los trámites académicos clave en un flujo online guiado
 
 ## Historias de usuario
 
-### HU-01: Alumno quiere matricularse
+### US-01: Alumno quiere matricularse
 
 > Como estudiante de la UNEX, quiero matricularme de forma sencilla e intuitiva, para no tener que hacerlo presencialmente y tener una validación instantánea.
 
@@ -40,7 +40,7 @@ Digitalizar y unificar los trámites académicos clave en un flujo online guiado
 - **Verificaciones:** Pruebas de integración con el sistema de expedientes.
 - **Restricciones:** Solo disponible en el periodo oficial de matrícula.
 
-### HU-02: Alumno quiere desmatricularse
+### US-02: Alumno quiere desmatricularse
 
 > Como estudiante de la UNEX, quiero desmatricularme de forma sencilla e intuitiva, para no tener que hacerlo presencialmente y tener una validación instantánea.
 
@@ -58,7 +58,7 @@ Digitalizar y unificar los trámites académicos clave en un flujo online guiado
 - **Verificaciones:** Casos de prueba con fechas límite.
 - **Restricciones:** Solo disponible en el periodo oficial de matrícula.
 
-### HU-03: Alumno quiere pedir una beca y poder monitorizar su estado en vivo
+### US-03: Alumno quiere pedir una beca y poder monitorizar su estado en vivo
 
 > Como estudiante de la UNEX, quiero poder monitorizar el progreso en la concesión de cualquier beca en proceso, así como mayor facilidad en el trámite, para saber si falta documentación o está resuelta.
 
@@ -76,7 +76,7 @@ Digitalizar y unificar los trámites académicos clave en un flujo online guiado
 - **Verificaciones:** Prueba con lector de pantalla (accesibilidad).
 - **Restricciones:** Sujeto a las bases reguladoras de la convocatoria.
 
-### HU-04: Descarga de documentos oficiales
+### US-04: Descarga de documentos oficiales
 
 > Como estudiante de la UNEX, quiero poder descargar mi matrícula, expediente o cualquier otro documento para no tener la necesidad de solicitarlo de forma presencial.
 

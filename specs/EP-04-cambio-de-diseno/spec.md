@@ -21,7 +21,7 @@ Renovar la identidad visual y la experiencia de usuario, ofreciendo una interfaz
 
 ## Historias de usuario
 
-### HU-10: Campus más estético
+### US-10: Campus más estético
 
 > Como estudiante de la UNEX, quiero un campus visiblemente agradable, para que pueda usarlo a gusto.
 
@@ -39,7 +39,7 @@ Renovar la identidad visual y la experiencia de usuario, ofreciendo una interfaz
 - **Verificaciones:** Revisión con imagen corporativa.
 - **Restricciones:** Sin romper accesibilidad ni funcionalidad.
 
-### HU-11: Directorio de perfiles
+### US-11: Directorio de perfiles
 
 > Como usuario de la UNEX, quiero poder encontrar el perfil y contacto de un alumno o profesor de la UNEX para poder contactar con él.
 
@@ -57,7 +57,7 @@ Renovar la identidad visual y la experiencia de usuario, ofreciendo una interfaz
 - **Verificaciones:** Prueba de acceso a datos sensibles.
 - **Restricciones:** No exponer datos sensibles sin consentimiento previo.
 
-### HU-12: App de escritorio
+### US-12: App de escritorio
 
 > Como usuario de la UNEX, quiero una aplicación de escritorio para poder acceder al campus y su información más rápido y sin usar el navegador.
 
@@ -75,7 +75,7 @@ Renovar la identidad visual y la experiencia de usuario, ofreciendo una interfaz
 - **Verificaciones:** Pruebas de usuarios.
 - **Restricciones:** Multiplataforma y actualizaciones automáticas.
 
-### HU-13: App de móvil
+### US-13: App de móvil
 
 > Como usuario de la UNEX, quiero una aplicación de móvil para poder acceder al campus cuando no tenga acceso a mi ordenador.
 

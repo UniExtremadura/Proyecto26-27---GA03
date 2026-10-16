@@ -22,7 +22,7 @@ Garantizar que el campus sea usable por toda la comunidad, cumpliendo estándare
 
 ## Historias de usuario
 
-### HU-09: Solicitud ERASMUS accesible
+### US-09: Solicitud ERASMUS accesible
 
 > Como estudiante de la UNEX, quiero poder solicitar ERASMUS, seguir su estado y facilidad de entender cómo y que documentos debo cumplimentar y donde debo entregarlos para poder organizar mi experiencia ERASMUS de forma asequible.
 

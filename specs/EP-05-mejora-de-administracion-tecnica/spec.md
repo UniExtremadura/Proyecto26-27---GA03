@@ -21,7 +21,7 @@ Dotar al campus de una base técnica estable, segura y eficiente (alta disponibi
 
 ## Historias de usuario
 
-### HU-14: Protección contra fallos o pérdidas de conexión
+### US-14: Protección contra fallos o pérdidas de conexión
 
 > Como usuario de la UNEX, quiero que mi progreso durante un trámite no se vea interrumpido por un fallo de la web o por una pérdida de conexión, para no tener que rellenar un formulario largo varias veces.
 
@@ -39,7 +39,7 @@ Dotar al campus de una base técnica estable, segura y eficiente (alta disponibi
 - **Verificaciones:** Prueba de corte de red y cierre inesperado.
 - **Restricciones:** Los borradores caducan a los 30 días.
 
-### HU-15: Mejora de la base de datos y su gestión
+### US-15: Mejora de la base de datos y su gestión
 
 > Como administrador de la UNEX, quiero una base de datos robusta, que no provoque fallos, para que el campus funcione sin errores y se eviten las pérdidas de datos.
 
@@ -57,7 +57,7 @@ Dotar al campus de una base técnica estable, segura y eficiente (alta disponibi
 - **Verificaciones:** Simulacro de restauración de backup.
 - **Restricciones:** Ventanas de mantenimiento y compatibilidad con sistemas actuales.
 
-### HU-16: Mejoría de la estabilidad del servicio
+### US-16: Mejoría de la estabilidad del servicio
 
 > Como usuario de la UNEX, quiero que el campus esté disponible y sea estable, para poder usarlo cuando lo necesite.
 
@@ -75,7 +75,7 @@ Dotar al campus de una base técnica estable, segura y eficiente (alta disponibi
 - **Verificaciones:** Prueba de caos y simulación de fallo de nodo.
 - **Restricciones:** RTO <1 h y RPO <15 min.
 
-### HU-17: Integración de Outlook dentro del campus
+### US-17: Integración de Outlook dentro del campus
 
 > Como usuario de la UNEX, quiero ver mi correo de Outlook dentro del campus, para no tener que cambiar de aplicación/pestaña.
 

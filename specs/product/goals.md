@@ -13,7 +13,7 @@ G-01	Renovar la arquitectura del Campus Virtual	Migrar/actualizar la plataforma 
 G-02	Rediseñar el Portal de Alumnos	Implementar una interfaz centrada en el usuario que unifique trámites académicos, consultas y servicios.
 G-03	Unificar la imagen y experiencia de las webs UNEX	Aplicar un sistema de diseño común a todas las webs institucionales.
 G-04	Actualizar los servicios digitales asociados	Renovar APIs, autenticación (SSO), notificaciones y servicios de integración.
-G-05	Garantizar accesibilidad y cumplimiento normativo	Alcanzar conformidad WCAG 2.2 AA y normativa europea de accesibilidad y protección de datos
+G-05	Garantizar accesibilidad y cumplimiento normativo	Alcanzar conformidad WCAG 2.1 AA y normativa europea de accesibilidad y protección de datos
 G-06	Mejorar el rendimiento y la disponibilidad	Reducir tiempos de carga y garantizar alta disponibilidad de los servicios críticos.
 G-07	Fortalecer la seguridad de la información	Aplicar medidas de seguridad alineadas con ENS (Esquema Nacional de Seguridad) y RGPD.
 G-08	Habilitar la gestión y publicación autónoma de contenidos	Dotar al personal de herramientas y formación para gestionar contenidos sin dependencia técnica.
@@ -22,7 +22,7 @@ G-08	Habilitar la gestión y publicación autónoma de contenidos	Dotar al perso
 N.º	Indicador	Métrica	Método de comprobación	Objetivo
 M-01	Satisfacción de estudiantes y profesores	Encuesta NPS/CSAT	Encuesta post-implantación	≥ 4/5
 M-02	Tiempo de carga (LCP)	Core Web Vitals	Lighthouse / RUM	≤ 2,5 s
-M-03	Accesibilidad	Conformidad WCAG 2.2 AA	Auditoría externa	100% (pág. críticas)
+M-03	Accesibilidad	Conformidad WCAG 2.1 AA	Auditoría externa	100% (pág. críticas)
 M-04	Disponibilidad de servicios	Uptime mensual	Monitorización (Zabbix)	≥ 99,5%
 M-05	Adopción del nuevo Portal	%usuarios activos mensuales	Analítica web	≥ 85% del alumnado
 M-06	Reducción de incidencias	Tickets de soporte	Sistema de tickets	-50%
@@ -36,21 +36,20 @@ M-09	Formación al personal	%PAS/profesorado formado	| Registro de formación	�
 - I-02: Rediseño funcional y visual del Portal de Alumnos.
 - I-03: Actualización de servicios asociados: SSO, APIs, notificaciones, integraciones con SGA (Sistema de Gestión Académica).
 - I-04: Migración y unificación de las webs institucionales de la UNEX a un sistema de diseño común.
-- I-05: Implementación de accesibilidad WCAG 2.2 AA.
+- I-05: Implementación de accesibilidad WCAG 2.1 AA.
 - I-06: Mejoras de seguridad alineadas con ENS y RGPD.
 - I-07: Formación y documentación para el personal.
 - I-08: Plan de comunicación y gestión del cambio.
 
 # 5. Exclusiones
-- EX-01: Desarrollo de una app móvil nativa (iOS/Android) en esta fase.
-- EX-02: Reingeniería de procesos administrativos de secretaría.
-- EX-03: Renovación de infraestructura física de red o servidores salvo la necesaria para el despliegue.
-- EX-04: Integración con plataformas de terceros no aprobadas previamente por el comité.
-- EX-05: Traducción de contenidos a idiomas distintos de español.
-- EX-06: Desarrollo de nuevas titulaciones o modificación de planes de estudio.
-- EX-07: Cambios en los procesos administrativos internos (solo su digitalización).
-- EX-08: Renovación del hardware de los centros o aulas.
-- EX-09: Sistemas de gestión económica o de RRHH (excepto integraciones puntuales).
+- EX-01: Reingeniería de procesos administrativos de secretaría.
+- EX-02: Renovación de infraestructura física de red o servidores salvo la necesaria para el despliegue.
+- EX-03: Integración con plataformas de terceros no aprobadas previamente por el comité.
+- EX-04: Traducción de contenidos a idiomas distintos de español.
+- EX-05: Desarrollo de nuevas titulaciones o modificación de planes de estudio.
+- EX-06: Cambios en los procesos administrativos internos (solo su digitalización).
+- EX-07: Renovación del hardware de los centros o aulas.
+- EX-08: Sistemas de gestión económica o de RRHH (excepto integraciones puntuales).
 
 # 6. Supuestos
 - S-01: Existe disponibilidad presupuestaria aprobada para todo el ciclo del proyecto.
