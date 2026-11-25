@@ -1,2 +1,7 @@
-GA03-codigo-ramas/
-GA03-codigo-ramas/
+__pycache__/
+*.pyc
+.pytest_cache/
+instance/
+.venv/
+venv/
+*.db
