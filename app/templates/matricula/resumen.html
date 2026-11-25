@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Mi matrícula · Campus UNEX{% endblock %}
+{% block content %}
+<h1>Mi matrícula</h1>
+{% if matriculas %}
+<p>Paso 3 de 3: matrícula registrada.</p>
+<table><caption>Asignaturas matriculadas</caption>
+<thead><tr><th scope="col">Código</th><th scope="col">Asignatura</th><th scope="col">ECTS</th></tr></thead>
+<tbody>{% for m in matriculas %}<tr><td>{{ m.codigo }}</td><td>{{ m.nombre }}</td><td>{{ m.creditos }}</td></tr>{% endfor %}</tbody></table>
+<p>Total: <strong>{{ creditos }} ECTS</strong></p>
+{% else %}<p>Todavía no estás matriculado en ninguna asignatura.</p>{% endif %}
+<p><a href="{{ url_for('matricula.formulario') }}">Matricularme en más asignaturas</a></p>
+{% endblock %}
