@@ -1,4 +1,6 @@
 """US-06 · Ficha de asignatura con sus docentes."""
+import sqlite3
+
 from flask import Blueprint, abort, render_template
 
 from .. import registry
@@ -53,3 +55,23 @@ def detalle(codigo):
 
 
 registry.register_nav("Asignaturas", "asignaturas.lista", "Información", 10)
+@bp.errorhandler(404)
+def asignatura_no_encontrada(_e):
+    return render_template("error.html", codigo=404,
+                           mensaje="La asignatura que buscas no existe. Revisa el código en el listado."), 404
+
+
+@bp.errorhandler(sqlite3.Error)
+def error_de_datos(_e):
+    return render_template("error.html", codigo=503,
+                           mensaje="No podemos cargar la información ahora mismo. Inténtalo de nuevo en unos minutos."), 503
+
+
+def buscar_en_asignaturas(q):
+    filas = get_db().execute("SELECT codigo, nombre FROM asignaturas WHERE nombre LIKE ? OR codigo LIKE ? ORDER BY codigo",
+                             (f"%{q}%", f"%{q}%")).fetchall()
+    return [{"title": f"{f['codigo']} · {f['nombre']}", "url": f"/asignaturas/{f['codigo']}", "section": "Asignaturas"}
+            for f in filas]
+
+
+registry.register_search(buscar_en_asignaturas)
