@@ -36,3 +36,14 @@ class CampusClient:
             raise ApiError(mensaje or f"Error del servidor ({error.code}).", error.code) from error
         except urllib.error.URLError as error:
             raise ApiError("No se puede conectar con el servidor del campus.") from error
+    def login(self, usuario, clave):
+        """Obtiene y guarda el token de acceso. Lanza ApiError si las credenciales no son válidas."""
+        if not usuario or not clave:
+            raise ApiError("Introduce usuario y contraseña.")
+        self.token = self._peticion("POST", "/api/token", {"username": usuario, "password": clave})["token"]
+        return self.token
+
+    def perfil(self):
+        if not self.token:
+            raise ApiError("Primero debes iniciar sesión.")
+        return self._peticion("GET", "/api/yo")
