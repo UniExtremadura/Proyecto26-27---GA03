@@ -54,6 +54,8 @@ def obtener_borrador(db, user_id, tramite, ahora=None):
                       (user_id, tramite)).fetchone()
     if fila is None:
         return None
+    if fila["caduca"] < _iso(ahora or _ahora()):
+        return None  # un borrador caducado se considera inexistente
     return {"datos": json.loads(fila["datos"]), "version": fila["version"], "actualizado": fila["actualizado"]}
 
 
@@ -93,3 +95,15 @@ def eliminar(tramite):
     db.execute("DELETE FROM borradores WHERE user_id = ? AND tramite = ?", (g.user["id"], tramite))
     db.commit()
     return "", 204
+def purgar_caducados(db, ahora=None):
+    """Elimina los borradores cuya fecha de caducidad ya ha pasado; devuelve cuántos."""
+    ahora = ahora or _ahora()
+    cursor = db.execute("DELETE FROM borradores WHERE caduca < ?", (_iso(ahora),))
+    db.commit()
+    return cursor.rowcount
+
+
+@bp.post("/purgar")
+@role_required("pas")
+def purgar():
+    return jsonify(eliminados=purgar_caducados(get_db()))
