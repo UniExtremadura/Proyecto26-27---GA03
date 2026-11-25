@@ -12,4 +12,9 @@
     </li>
     {% endfor %}
   </ul>
+  <form action="{{ url_for('buscar.resultados') }}" method="get" role="search" class="buscador">
+    <label for="q" class="solo-lectores">Buscar en el campus</label>
+    <input id="q" name="q" type="search" placeholder="Buscar…" value="{{ request.args.get('q', '') }}">
+    <button type="submit">Buscar</button>
+  </form>
 </nav>
