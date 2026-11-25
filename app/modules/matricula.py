@@ -75,3 +75,23 @@ def revisar():
 
 
 registry.register_nav("Matrícula", "matricula.formulario", "Trámites", 10)
+@bp.post("/confirmar")
+@role_required("alumno")
+def confirmar():
+    db = get_db()
+    # Se valida de nuevo: entre «revisar» y «confirmar» pueden haberse agotado las plazas.
+    errores, nuevas = validar_matricula(db, g.user["id"], request.form.getlist("codigos"))
+    if errores:
+        return _render_formulario(db, errores, request.form.getlist("codigos"), 422)
+    db.executemany("INSERT INTO matriculas (user_id, asignatura_id) VALUES (?, ?)",
+                   [(g.user["id"], a["id"]) for a in nuevas])
+    db.commit()
+    flash("Matrícula confirmada correctamente.", "info")
+    return redirect(url_for("matricula.resumen"))
+
+
+@bp.get("/resumen")
+@role_required("alumno")
+def resumen():
+    filas = matriculas_activas(get_db(), g.user["id"])
+    return render_template("matricula/resumen.html", matriculas=filas, creditos=sum(f["creditos"] for f in filas))
