@@ -63,3 +63,21 @@ registry.register_nav("Eventos", "eventos.lista", "Información", 20)
 @bp.get("/api/eventos")
 def api_lista():
     return jsonify([dict(e) for e in listar_eventos(get_db())])
+def obtener_evento(db, evento_id):
+    return db.execute("SELECT * FROM eventos WHERE id = ?", (evento_id,)).fetchone()
+
+
+@bp.get("/api/eventos/<int:evento_id>")
+def api_detalle(evento_id):
+    evento = obtener_evento(get_db(), evento_id)
+    if evento is None:
+        return jsonify(error="Evento no encontrado"), 404
+    return jsonify(dict(evento))
+
+
+@bp.get("/eventos/<int:evento_id>")
+def detalle_pagina(evento_id):
+    evento = obtener_evento(get_db(), evento_id)
+    if evento is None:
+        abort(404)
+    return render_template("eventos/detalle.html", e=evento)
