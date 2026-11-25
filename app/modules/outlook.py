@@ -42,3 +42,11 @@ def conectar():
                                mensaje="La integración con Microsoft 365 todavía no está configurada."), 503
     session["m365_state"] = secrets.token_urlsafe(16)
     return redirect(construir_url_autorizacion(a, url_for("outlook.vista", _external=True), session["m365_state"]))
+@bp.get("/")
+@login_required
+def vista():
+    a = ajustes()
+    return render_template("outlook/correo.html", configurado=esta_configurado(a), outlook_url=a["outlook_url"])
+
+
+registry.register_nav("Correo", "outlook.vista", "Servicios", 30)
