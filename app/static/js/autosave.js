@@ -47,7 +47,32 @@
     }).then(function (res) { version = res.version; return res; });
   }
 
-  function guardar(datos) { return enviar(datos); }
+  // Reintentos con espera exponencial (1 s, 2 s, 4 s... máx. 30 s); sin duplicados:
+  // el servidor trata como idempotente el reintento del mismo contenido.
+  var pendiente = null;
+  var intentos = 0;
+  var reintento = null;
+
+  function guardar(datos) {
+    pendiente = datos;
+    clearTimeout(reintento);
+    return enviar(datos).then(function (res) {
+      pendiente = null;
+      intentos = 0;
+      return res;
+    }).catch(function (error) {
+      intentos += 1;
+      var espera = Math.min(30000, 1000 * Math.pow(2, intentos - 1));
+      reintento = setTimeout(sincronizarPendiente, espera);
+      throw error;
+    });
+  }
+
+  function sincronizarPendiente() {
+    if (pendiente) {
+      guardar(pendiente).then(function () { mostrarAviso("Progreso sincronizado."); }).catch(function () { /* se reintenta */ });
+    }
+  }
 
   // [[conexion]]
 
