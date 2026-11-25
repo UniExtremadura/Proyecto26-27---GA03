@@ -1,6 +1,7 @@
 """US-04 · Descarga de documentos oficiales."""
-from flask import Blueprint, Response, abort, g
+from flask import Blueprint, Response, abort, g, render_template
 
+from .. import registry
 from ..auth import role_required
 from ..db import get_db
 
@@ -33,3 +34,10 @@ def descargar(tipo):
     texto = generar_documento(get_db(), g.user, tipo)
     return Response(texto, mimetype="text/plain; charset=utf-8",
                     headers={"Content-Disposition": f'attachment; filename="{tipo}.txt"'})
+@bp.get("/")
+@role_required("alumno")
+def lista():
+    return render_template("documentos/lista.html", tipos=TIPOS)
+
+
+registry.register_nav("Documentos oficiales", "documentos.lista", "Trámites", 20)
