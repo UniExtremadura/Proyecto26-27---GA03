@@ -121,3 +121,20 @@ def registrar_pendiente(solicitud_id):
     except ValueError as error:
         flash(str(error), "error")
     return redirect(url_for("becas.detalle", solicitud_id=solicitud_id))
+@bp.get("/<int:solicitud_id>/estado.json")
+@role_required("alumno", "pas")
+def estado_json(solicitud_id):
+    s = _solicitud_visible_o_404(solicitud_id)
+    return jsonify(estado=s["estado"], estado_texto=ESTADOS[s["estado"]], actualizada=s["actualizada"],
+                   pendientes=len(pendientes_de(get_db(), solicitud_id)))
+
+
+@bp.post("/<int:solicitud_id>/estado")
+@role_required("pas")
+def actualizar_estado(solicitud_id):
+    _solicitud_visible_o_404(solicitud_id)
+    try:
+        cambiar_estado(get_db(), solicitud_id, request.form.get("estado", ""))
+    except ValueError as error:
+        return jsonify(error=str(error)), 422
+    return redirect(url_for("becas.detalle", solicitud_id=solicitud_id))

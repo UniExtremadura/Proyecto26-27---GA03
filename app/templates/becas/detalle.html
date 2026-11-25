@@ -4,7 +4,7 @@
 <h1>Solicitud de beca nº {{ s.id }}</h1>
 <dl>
   <dt>Tipo</dt><dd>{{ s.tipo }}</dd>
-  <dt>Estado</dt><dd><strong id="estado-beca" role="status">{{ estados[s.estado] }}</strong></dd>
+  <dt>Estado</dt><dd><strong id="estado-beca" role="status" data-estado-url="{{ url_for('becas.estado_json', solicitud_id=s.id) }}">{{ estados[s.estado] }}</strong></dd>
   <dt>Última actualización</dt><dd>{{ s.actualizada }}</dd>
   {% if s.observaciones %}<dt>Observaciones</dt><dd>{{ s.observaciones }}</dd>{% endif %}
 </dl>
@@ -21,3 +21,4 @@
 </section>
 <p><a href="{{ url_for('becas.lista') }}">Volver a mis becas</a></p>
 {% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/becas.js') }}" defer></script>{% endblock %}
