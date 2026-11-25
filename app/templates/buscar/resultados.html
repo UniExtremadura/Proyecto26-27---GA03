@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Buscar · Campus UNEX{% endblock %}
+{% block content %}
+<h1>Resultados de la búsqueda</h1>
+{% if not q %}
+  <p>Escribe qué quieres buscar en el campus.</p>
+{% elif demasiado_corta %}
+  <p role="alert">Escribe al menos 2 caracteres.</p>
+{% elif resultados %}
+  <p>{{ resultados | length }} resultado(s) para «{{ q }}»:</p>
+  <ul>{% for r in resultados %}<li><a href="{{ r.url }}">{{ r.title }}</a> <small>({{ r.section }})</small></li>{% endfor %}</ul>
+{% else %}
+  <p>No hay resultados para «{{ q }}». Prueba con otras palabras.</p>
+{% endif %}
+{% endblock %}

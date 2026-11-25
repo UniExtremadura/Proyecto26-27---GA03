@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Estado de la base de datos{% endblock %}
+{% block content %}
+<h1>Estado de la base de datos</h1>
+{% if alertas %}
+<section aria-labelledby="alertas"><h2 id="alertas">Alertas</h2>
+<ul role="alert">{% for a in alertas %}<li><strong>{{ a.tipo }}</strong>: {{ a.mensaje }}</li>{% endfor %}</ul></section>
+{% else %}<p>Sin alertas: la base de datos está en buen estado.</p>{% endif %}
+<table>
+  <caption>Tablas</caption>
+  <thead><tr><th scope="col">Tabla</th><th scope="col">Filas</th><th scope="col">Índices</th></tr></thead>
+  <tbody>{% for t in tablas %}<tr><td>{{ t.tabla }}</td><td>{{ t.filas }}</td><td>{{ t.indices | length }}</td></tr>{% endfor %}</tbody>
+</table>
+{% endblock %}
