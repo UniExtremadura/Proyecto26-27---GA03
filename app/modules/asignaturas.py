@@ -26,3 +26,16 @@ INSERT OR IGNORE INTO asignatura_docente (asignatura_id, docente_id, parte)
 INSERT OR IGNORE INTO asignatura_docente (asignatura_id, docente_id, parte)
     SELECT id, 3, 'Seminarios' FROM asignaturas WHERE codigo = 'ASG103';
 """
+def obtener_detalle(db, codigo):
+    """Devuelve la asignatura con sus docentes y partes, o None si no existe."""
+    asig = db.execute("SELECT * FROM asignaturas WHERE codigo = ?", (codigo,)).fetchone()
+    if asig is None:
+        return None
+    docentes = db.execute(
+        "SELECT d.nombre, ad.parte FROM asignatura_docente ad JOIN docentes d ON d.id = ad.docente_id "
+        "WHERE ad.asignatura_id = ? ORDER BY d.nombre", (asig["id"],)).fetchall()
+    return {**dict(asig), "docentes": [dict(d) for d in docentes]}
+
+
+def listar_asignaturas(db):
+    return db.execute("SELECT codigo, nombre, creditos, curso FROM asignaturas ORDER BY curso, codigo").fetchall()
