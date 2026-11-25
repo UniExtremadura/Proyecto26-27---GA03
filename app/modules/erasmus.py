@@ -65,3 +65,17 @@ ESTADOS = {"enviada": "Enviada", "en_revision": "En revisión", "admitida": "Adm
 def estado():
     filas = get_db().execute("SELECT * FROM solicitudes_erasmus WHERE user_id = ? ORDER BY id DESC", (g.user["id"],)).fetchall()
     return render_template("erasmus/estado.html", solicitudes=filas, estados=ESTADOS)
+DOCUMENTACION = [
+    {"documento": "Formulario de solicitud firmado", "donde": "Oficina de Relaciones Internacionales (Rectorado, planta 1)",
+     "como": "En persona (lunes a viernes, 9:00–14:00) o por registro electrónico"},
+    {"documento": "Certificado de idiomas", "donde": "Oficina de Relaciones Internacionales",
+     "como": "Copia compulsada en papel o PDF por registro electrónico"},
+    {"documento": "Expediente académico", "donde": "Se descarga desde el campus (Documentos oficiales)",
+     "como": "Adjuntar el archivo descargado al registro electrónico"},
+]
+
+
+@bp.get("/documentacion")
+@role_required("alumno")
+def documentacion():
+    return render_template("erasmus/documentacion.html", documentos=DOCUMENTACION)
