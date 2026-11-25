@@ -57,3 +57,11 @@ def enviar():
 
 
 registry.register_nav("ERASMUS", "erasmus.formulario", "Trámites", 40)
+ESTADOS = {"enviada": "Enviada", "en_revision": "En revisión", "admitida": "Admitida", "rechazada": "Rechazada"}
+
+
+@bp.get("/estado")
+@role_required("alumno")
+def estado():
+    filas = get_db().execute("SELECT * FROM solicitudes_erasmus WHERE user_id = ? ORDER BY id DESC", (g.user["id"],)).fetchall()
+    return render_template("erasmus/estado.html", solicitudes=filas, estados=ESTADOS)
