@@ -50,3 +50,13 @@ def validar_evento(datos):
     if enlace and not enlace.startswith("https://"):
         errores.append("El enlace de inscripción debe empezar por https://")
     return errores
+def listar_eventos(db):
+    return db.execute("SELECT * FROM eventos ORDER BY fecha, hora").fetchall()
+
+
+@bp.get("/eventos")
+def lista():
+    return render_template("eventos/lista.html", eventos=listar_eventos(get_db()))
+
+
+registry.register_nav("Eventos", "eventos.lista", "Información", 20)
