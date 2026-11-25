@@ -39,3 +39,17 @@ def obtener_detalle(db, codigo):
 
 def listar_asignaturas(db):
     return db.execute("SELECT codigo, nombre, creditos, curso FROM asignaturas ORDER BY curso, codigo").fetchall()
+@bp.get("/")
+def lista():
+    return render_template("asignaturas/lista.html", asignaturas=listar_asignaturas(get_db()))
+
+
+@bp.get("/<codigo>")
+def detalle(codigo):
+    asignatura = obtener_detalle(get_db(), codigo)
+    if asignatura is None:
+        abort(404)
+    return render_template("asignaturas/detalle.html", a=asignatura)
+
+
+registry.register_nav("Asignaturas", "asignaturas.lista", "Información", 10)
