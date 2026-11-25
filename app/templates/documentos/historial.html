@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Historial de descargas · Campus UNEX{% endblock %}
+{% block content %}
+<h1>Historial de descargas</h1>
+{% if descargas %}
+<table><caption>Documentos descargados</caption>
+<thead><tr><th scope="col">Documento</th><th scope="col">Fecha</th></tr></thead>
+<tbody>{% for d in descargas %}<tr><td>{{ tipos[d.tipo] }}</td><td>{{ d.fecha }}</td></tr>{% endfor %}</tbody></table>
+{% else %}<p>Todavía no has descargado ningún documento.</p>{% endif %}
+<p><a href="{{ url_for('documentos.lista') }}">Volver a documentos</a></p>
+{% endblock %}
