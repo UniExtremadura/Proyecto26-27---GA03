@@ -1,0 +1,59 @@
+"""US-09 · Solicitud ERASMUS accesible."""
+from flask import Blueprint, flash, g, redirect, render_template, request, url_for
+
+from .. import registry
+from ..auth import role_required
+from ..db import get_db
+
+bp = Blueprint("erasmus", __name__, url_prefix="/erasmus")
+
+SCHEMA = """
+CREATE TABLE IF NOT EXISTS solicitudes_erasmus (
+    id INTEGER PRIMARY KEY,
+    user_id INTEGER NOT NULL REFERENCES users (id),
+    destino TEXT NOT NULL,
+    motivo TEXT NOT NULL,
+    estado TEXT NOT NULL DEFAULT 'enviada',
+    creada TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+"""
+DESTINOS = ("Universidad de Lisboa (PT)", "Universidad de Bolonia (IT)",
+            "Universidad de Gante (BE)", "Universidad de Cracovia (PL)")
+
+
+def validar_solicitud(destino, motivo):
+    errores = []
+    if destino not in DESTINOS:
+        errores.append("Elige un destino de la lista.")
+    if not 20 <= len(motivo.strip()) <= 1000:
+        errores.append("La motivación debe tener entre 20 y 1000 caracteres.")
+    return errores
+
+
+def crear_solicitud(db, user_id, destino, motivo):
+    cursor = db.execute("INSERT INTO solicitudes_erasmus (user_id, destino, motivo) VALUES (?, ?, ?)",
+                        (user_id, destino, motivo.strip()))
+    db.commit()
+    return cursor.lastrowid
+
+
+@bp.get("/")
+@role_required("alumno")
+def formulario():
+    return render_template("erasmus/formulario.html", destinos=DESTINOS)
+
+
+@bp.post("/")
+@role_required("alumno")
+def enviar():
+    destino, motivo = request.form.get("destino", ""), request.form.get("motivo", "")
+    errores = validar_solicitud(destino, motivo)
+    if errores:
+        return render_template("erasmus/formulario.html", destinos=DESTINOS, errores=errores,
+                               destino=destino, motivo=motivo), 422
+    crear_solicitud(get_db(), g.user["id"], destino, motivo)
+    flash("Solicitud ERASMUS enviada correctamente.", "info")
+    return redirect(url_for("erasmus.formulario"))
+
+
+registry.register_nav("ERASMUS", "erasmus.formulario", "Trámites", 40)
