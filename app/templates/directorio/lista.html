@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Directorio · Campus UNEX{% endblock %}
+{% block content %}
+<h1>Directorio de perfiles</h1>
+{% if perfiles %}
+<table><caption>Alumnos y profesores</caption>
+<thead><tr><th scope="col">Nombre</th><th scope="col">Rol</th></tr></thead>
+<tbody>{% for p in perfiles %}<tr><td><a href="{{ url_for('directorio.perfil', user_id=p.id) }}">{{ p.name }}</a></td><td>{{ p.role }}</td></tr>{% endfor %}</tbody></table>
+{% else %}<p>No se han encontrado perfiles.</p>{% endif %}
+{% endblock %}
