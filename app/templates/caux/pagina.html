@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}CAUX · Campus UNEX{% endblock %}
+{% block content %}
+<h1>Centro de Atención al Usuario (CAUX)</h1>
+<section aria-labelledby="faq"><h2 id="faq">Preguntas frecuentes</h2>
+  {% for f in faq %}<details><summary>{{ f.pregunta }}</summary><p>{{ f.respuesta }}</p></details>{% endfor %}
+</section>
+{% block formulario %}{% endblock %}
+{% endblock %}
