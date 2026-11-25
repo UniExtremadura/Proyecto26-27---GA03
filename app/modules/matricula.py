@@ -43,3 +43,35 @@ def validar_matricula(db, user_id, codigos):
     if total > MAX_CREDITOS:
         errores.append(f"Superas el máximo de {MAX_CREDITOS} ECTS ({total} ECTS).")
     return errores, nuevas
+def _asignaturas_con_plazas(db):
+    filas = db.execute("SELECT * FROM asignaturas ORDER BY curso, codigo").fetchall()
+    return [{**dict(a), "libres": plazas_libres(db, a)} for a in filas]
+
+
+def _render_formulario(db, errores=(), seleccion=(), estado=200):
+    actuales = matriculas_activas(db, g.user["id"])
+    return render_template("matricula/formulario.html", asignaturas=_asignaturas_con_plazas(db), errores=errores,
+                           seleccion=set(seleccion), creditos=sum(m["creditos"] for m in actuales),
+                           maximo=MAX_CREDITOS), estado
+
+
+@bp.get("/")
+@role_required("alumno")
+def formulario():
+    return _render_formulario(get_db())
+
+
+@bp.post("/revisar")
+@role_required("alumno")
+def revisar():
+    db = get_db()
+    codigos = request.form.getlist("codigos")
+    errores, nuevas = validar_matricula(db, g.user["id"], codigos)
+    if errores:
+        return _render_formulario(db, errores, codigos, 422)
+    actuales = sum(m["creditos"] for m in matriculas_activas(db, g.user["id"]))
+    nuevos = sum(a["creditos"] for a in nuevas)
+    return render_template("matricula/confirmar.html", asignaturas=nuevas, nuevos=nuevos, total=actuales + nuevos)
+
+
+registry.register_nav("Matrícula", "matricula.formulario", "Trámites", 10)
