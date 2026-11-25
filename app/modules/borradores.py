@@ -85,6 +85,12 @@ def guardar(tramite):
     if not isinstance(cuerpo, dict) or not isinstance(cuerpo.get("datos"), dict):
         return jsonify(error="Se esperaba un objeto «datos»"), 400
     db = get_db()
+    actual = obtener_borrador(db, g.user["id"], tramite)
+    base = cuerpo.get("base_version")
+    if actual is not None and base is not None and base != actual["version"]:
+        if actual["datos"] == cuerpo["datos"]:
+            return jsonify(version=actual["version"])  # reintento duplicado: idempotente
+        return jsonify(error="El borrador ha cambiado en otra pestaña", actual=actual), 409
     return jsonify(version=guardar_borrador(db, g.user["id"], tramite, cuerpo["datos"]))
 
 
