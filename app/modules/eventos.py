@@ -60,3 +60,6 @@ def lista():
 
 
 registry.register_nav("Eventos", "eventos.lista", "Información", 20)
+@bp.get("/api/eventos")
+def api_lista():
+    return jsonify([dict(e) for e in listar_eventos(get_db())])
