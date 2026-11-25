@@ -74,7 +74,13 @@
     }
   }
 
-  // [[conexion]]
+  window.addEventListener("offline", function () {
+    mostrarAviso("Sin conexión. Tu progreso está protegido y se guardará al volver la conexión.");
+  });
+  window.addEventListener("online", function () {
+    mostrarAviso("Conexión recuperada. Sincronizando tu progreso…");
+    sincronizarPendiente();
+  });
 
   function programarGuardado() {
     clearTimeout(temporizador);
