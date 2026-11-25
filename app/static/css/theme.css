@@ -1,0 +1,20 @@
+:root {
+  --color-fondo: #ffffff;
+  --color-texto: #1f2933;
+  --color-primario: #0b5c3b;
+  --color-sobre-primario: #ffffff;
+  --color-menu-titulo: #d9efe5;
+  --color-superficie: #f3f4f6;
+  --color-borde: #cbd2d9;
+  --fuente-base: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --espacio: 1rem;
+}
+
+body { font-family: var(--fuente-base); font-size: 1.0625rem; color: var(--color-texto); background: var(--color-fondo); }
+h1 { font-size: 2rem; line-height: 1.2; margin: 1.5rem 0 1rem; }
+h2 { font-size: 1.5rem; line-height: 1.25; margin: 1.5rem 0 .75rem; }
+h3 { font-size: 1.25rem; line-height: 1.3; }
+a { color: var(--color-primario); }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid #f2a900; outline-offset: 2px;
+}
