@@ -94,7 +94,30 @@ def nueva():
 @bp.get("/<int:solicitud_id>")
 @role_required("alumno", "pas")
 def detalle(solicitud_id):
-    return render_template("becas/detalle.html", s=_solicitud_visible_o_404(solicitud_id), estados=ESTADOS)
+    db = get_db()
+    s = _solicitud_visible_o_404(solicitud_id)
+    return render_template("becas/detalle.html", s=s, estados=ESTADOS, pendientes=pendientes_de(db, solicitud_id))
 
 
 registry.register_nav("Becas", "becas.lista", "Trámites", 30)
+def pendientes_de(db, solicitud_id):
+    return db.execute("SELECT * FROM beca_pendientes WHERE solicitud_id = ? ORDER BY id", (solicitud_id,)).fetchall()
+
+
+def anadir_pendiente(db, solicitud_id, descripcion):
+    descripcion = descripcion.strip()
+    if not descripcion:
+        raise ValueError("Indica qué documentación falta.")
+    db.execute("INSERT INTO beca_pendientes (solicitud_id, descripcion) VALUES (?, ?)", (solicitud_id, descripcion[:300]))
+    db.commit()
+
+
+@bp.post("/<int:solicitud_id>/pendientes")
+@role_required("pas")
+def registrar_pendiente(solicitud_id):
+    _solicitud_visible_o_404(solicitud_id)
+    try:
+        anadir_pendiente(get_db(), solicitud_id, request.form.get("descripcion", ""))
+    except ValueError as error:
+        flash(str(error), "error")
+    return redirect(url_for("becas.detalle", solicitud_id=solicitud_id))

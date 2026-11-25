@@ -8,5 +8,16 @@
   <dt>Última actualización</dt><dd>{{ s.actualizada }}</dd>
   {% if s.observaciones %}<dt>Observaciones</dt><dd>{{ s.observaciones }}</dd>{% endif %}
 </dl>
+<section aria-labelledby="pendientes"><h2 id="pendientes">Incidencias y documentación pendiente</h2>
+{% if pendientes %}
+<ul>{% for p in pendientes %}<li>{{ p.descripcion }}{% if p.resuelto %} (entregado){% endif %}</li>{% endfor %}</ul>
+{% else %}<p>No hay documentación pendiente.</p>{% endif %}
+{% if g.user.role == 'pas' %}
+<form method="post" action="{{ url_for('becas.registrar_pendiente', solicitud_id=s.id) }}">
+  <label for="descripcion">Documento que falta</label> <input id="descripcion" name="descripcion" required maxlength="300">
+  <button type="submit">Añadir</button>
+</form>
+{% endif %}
+</section>
 <p><a href="{{ url_for('becas.lista') }}">Volver a mis becas</a></p>
 {% endblock %}
