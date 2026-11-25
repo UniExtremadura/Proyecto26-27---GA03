@@ -50,19 +50,43 @@ def validar_evento(datos):
     if enlace and not enlace.startswith("https://"):
         errores.append("El enlace de inscripción debe empezar por https://")
     return errores
-def listar_eventos(db):
-    return db.execute("SELECT * FROM eventos ORDER BY fecha, hora").fetchall()
+def listar_eventos(db, q="", tipo="", ubicacion="", desde="", hasta=""):
+    """Lista eventos; todos los filtros son opcionales y se combinan con AND (consulta parametrizada)."""
+    condiciones, params = [], []
+    if q:
+        condiciones.append("(titulo LIKE ? OR descripcion LIKE ?)")
+        params += [f"%{q}%", f"%{q}%"]
+    if tipo:
+        condiciones.append("tipo = ?")
+        params.append(tipo)
+    if ubicacion:
+        condiciones.append("ubicacion LIKE ?")
+        params.append(f"%{ubicacion}%")
+    if desde:
+        condiciones.append("fecha >= ?")
+        params.append(desde)
+    if hasta:
+        condiciones.append("fecha <= ?")
+        params.append(hasta)
+    where = (" WHERE " + " AND ".join(condiciones)) if condiciones else ""
+    return db.execute(f"SELECT * FROM eventos{where} ORDER BY fecha, hora", params).fetchall()
+
+
+def _filtros():
+    return {k: request.args.get(k, "").strip() for k in ("q", "tipo", "ubicacion", "desde", "hasta")}
 
 
 @bp.get("/eventos")
 def lista():
-    return render_template("eventos/lista.html", eventos=listar_eventos(get_db()))
+    filtros = _filtros()
+    return render_template("eventos/lista.html", eventos=listar_eventos(get_db(), **filtros),
+                           filtros=filtros, tipos=TIPOS)
 
 
 registry.register_nav("Eventos", "eventos.lista", "Información", 20)
 @bp.get("/api/eventos")
 def api_lista():
-    return jsonify([dict(e) for e in listar_eventos(get_db())])
+    return jsonify([dict(e) for e in listar_eventos(get_db(), **_filtros())])
 def obtener_evento(db, evento_id):
     return db.execute("SELECT * FROM eventos WHERE id = ?", (evento_id,)).fetchone()
 
@@ -81,3 +105,9 @@ def detalle_pagina(evento_id):
     if evento is None:
         abort(404)
     return render_template("eventos/detalle.html", e=evento)
+def buscar_en_eventos(q):
+    return [{"title": e["titulo"], "url": f"/eventos/{e['id']}", "section": "Eventos"}
+            for e in listar_eventos(get_db(), q=q)]
+
+
+registry.register_search(buscar_en_eventos)
