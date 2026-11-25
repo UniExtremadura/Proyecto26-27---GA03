@@ -18,3 +18,21 @@ a { color: var(--color-primario); }
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
   outline: 3px solid #f2a900; outline-offset: 2px;
 }
+.cabecera { background: var(--color-primario); color: var(--color-sobre-primario); }
+.cabecera a, .cabecera .marca { color: var(--color-sobre-primario); }
+.cabecera .menu-titulo { color: var(--color-menu-titulo); }
+main { background: var(--color-fondo); }
+button { background: var(--color-primario); color: var(--color-sobre-primario); border: 0; border-radius: .4rem;
+         padding: .5rem 1rem; cursor: pointer; }
+input, select, textarea { padding: .4rem; border: 1px solid var(--color-borde); border-radius: .3rem; max-width: 100%; }
+th { background: var(--color-superficie); }
+.tarjetas { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: var(--espacio);
+            list-style: none; padding: 0; }
+.tarjeta { border: 1px solid var(--color-borde); border-radius: .6rem; padding: var(--espacio); background: var(--color-superficie); }
+.tarjeta span { display: block; font-size: .85rem; color: #52606d; }
+
+@media (max-width: 40rem) {
+  .cabecera { flex-direction: column; align-items: flex-start; }
+  main { padding: 0 .75rem; }
+  table { display: block; overflow-x: auto; }
+}
