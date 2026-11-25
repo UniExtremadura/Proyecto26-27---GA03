@@ -1,5 +1,5 @@
 """US-11 · Directorio de perfiles de alumnos y profesores."""
-from flask import Blueprint, render_template
+from flask import Blueprint, abort, render_template
 
 from .. import registry
 from ..auth import login_required
@@ -20,3 +20,11 @@ def lista():
 
 
 registry.register_nav("Directorio", "directorio.lista", "Servicios", 20)
+@bp.get("/<int:user_id>")
+@login_required
+def perfil(user_id):
+    fila = get_db().execute("SELECT id, name, role, email FROM users WHERE id = ? AND role IN ('alumno', 'profesor')",
+                            (user_id,)).fetchone()
+    if fila is None:
+        abort(404)
+    return render_template("directorio/perfil.html", p=fila)
