@@ -37,3 +37,37 @@ def obtener_matricula_propia(db, matricula_id, user_id):
 def cancelar(db, matricula_id):
     db.execute("UPDATE matriculas SET estado = 'cancelada', cancelada = CURRENT_TIMESTAMP WHERE id = ?", (matricula_id,))
     db.commit()
+def _contexto(matricula_id):
+    m = obtener_matricula_propia(get_db(), matricula_id, g.user["id"])
+    if m is None:
+        abort(404)
+    plazo = current_app.config.get("DESMATRICULA_HASTA", PLAZO_POR_DEFECTO)
+    permitido, motivo = puede_desmatricular(m, date.today().isoformat(), plazo)
+    return m, permitido, motivo
+
+
+@bp.get("/")
+@role_required("alumno")
+def lista():
+    return render_template("desmatricula/lista.html", matriculas=matriculas_del_alumno(get_db(), g.user["id"]))
+
+
+@bp.get("/<int:matricula_id>/confirmar")
+@role_required("alumno")
+def confirmacion(matricula_id):
+    m, permitido, motivo = _contexto(matricula_id)
+    return render_template("desmatricula/confirmar.html", m=m, permitido=permitido, motivo=motivo)
+
+
+@bp.post("/<int:matricula_id>")
+@role_required("alumno")
+def baja(matricula_id):
+    m, permitido, motivo = _contexto(matricula_id)
+    if not permitido:
+        return render_template("desmatricula/confirmar.html", m=m, permitido=False, motivo=motivo), 409
+    cancelar(get_db(), m["id"])
+    flash(f"Te has dado de baja de {m['codigo']}.", "info")
+    return redirect(url_for("desmatricula.lista"))
+
+
+registry.register_nav("Desmatriculación", "desmatricula.lista", "Trámites", 11)
