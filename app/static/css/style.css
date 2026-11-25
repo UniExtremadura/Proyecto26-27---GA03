@@ -9,3 +9,8 @@ main { max-width: 60rem; margin: 1rem auto; padding: 0 1rem; }
 .en-linea { display: inline; }
 table { border-collapse: collapse; width: 100%; }
 th, td { border: 1px solid #cbd2d9; padding: .4rem .6rem; text-align: left; }
+.menu-lista { display: flex; flex-wrap: wrap; gap: 1rem; list-style: none; margin: 0; padding: 0; align-items: flex-start; }
+.menu-lista ul { list-style: none; margin: 0; padding: 0; }
+.menu-titulo { font-weight: bold; font-size: .85rem; text-transform: uppercase; color: #52606d; }
+.menu a[aria-current="page"] { font-weight: bold; text-decoration: underline; }
+.solo-lectores { position: absolute; left: -999px; }
