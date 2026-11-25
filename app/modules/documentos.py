@@ -7,6 +7,15 @@ from ..db import get_db
 
 bp = Blueprint("documentos", __name__, url_prefix="/documentos")
 
+SCHEMA = """
+CREATE TABLE IF NOT EXISTS descargas (
+    id INTEGER PRIMARY KEY,
+    user_id INTEGER NOT NULL REFERENCES users (id),
+    tipo TEXT NOT NULL,
+    fecha TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+"""
+
 TIPOS = {
     "matricula": "Resguardo de matrícula",
     "expediente": "Expediente académico",
@@ -31,7 +40,10 @@ def generar_documento(db, user, tipo):
 def descargar(tipo):
     if tipo not in TIPOS:
         abort(404)
-    texto = generar_documento(get_db(), g.user, tipo)
+    db = get_db()
+    texto = generar_documento(db, g.user, tipo)
+    db.execute("INSERT INTO descargas (user_id, tipo) VALUES (?, ?)", (g.user["id"], tipo))
+    db.commit()
     return Response(texto, mimetype="text/plain; charset=utf-8",
                     headers={"Content-Disposition": f'attachment; filename="{tipo}.txt"'})
 @bp.get("/")
@@ -41,3 +53,9 @@ def lista():
 
 
 registry.register_nav("Documentos oficiales", "documentos.lista", "Trámites", 20)
+@bp.get("/historial")
+@role_required("alumno")
+def historial():
+    filas = get_db().execute("SELECT tipo, fecha FROM descargas WHERE user_id = ? ORDER BY id DESC",
+                             (g.user["id"],)).fetchall()
+    return render_template("documentos/historial.html", descargas=filas, tipos=TIPOS)
