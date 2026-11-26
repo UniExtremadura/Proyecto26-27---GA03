@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Eventos académicos · Campus UNEX{% endblock %}
+{% block content %}
+<h1>Eventos académicos</h1>
+<form method="get" class="filtros">
+  <p><label for="q">Palabras clave</label> <input id="q" name="q" value="{{ filtros.q }}"></p>
+  <p><label for="tipo">Tipo</label>
+    <select id="tipo" name="tipo"><option value="">Todos</option>
+      {% for t in tipos %}<option value="{{ t }}" {% if filtros.tipo == t %}selected{% endif %}>{{ t }}</option>{% endfor %}
+    </select></p>
+  <p><label for="ubicacion">Ubicación</label> <input id="ubicacion" name="ubicacion" value="{{ filtros.ubicacion }}"></p>
+  <p><label for="desde">Desde</label> <input id="desde" name="desde" type="date" value="{{ filtros.desde }}">
+     <label for="hasta">Hasta</label> <input id="hasta" name="hasta" type="date" value="{{ filtros.hasta }}"></p>
+  <button type="submit">Filtrar</button>
+</form>
+{% if eventos %}
+<ul class="eventos">
+  {% for e in eventos %}
+  <li><article>
+    <h2><a href="{{ url_for('eventos.detalle_pagina', evento_id=e.id) }}">{{ e.titulo }}</a></h2>
+    <p><time datetime="{{ e.fecha }}">{{ e.fecha }}</time> · {{ e.hora }} · {{ e.ubicacion }}</p>
+  </article></li>
+  {% endfor %}
+</ul>
+{% else %}<p>No hay eventos que coincidan con tu búsqueda.</p>{% endif %}
+{% endblock %}
