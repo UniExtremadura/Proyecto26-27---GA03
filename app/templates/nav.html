@@ -1,0 +1,20 @@
+<nav aria-label="Navegación principal" class="menu">
+  <ul class="menu-lista">
+    <li><a href="{{ url_for('index') }}" {% if request.endpoint == 'index' %}aria-current="page"{% endif %}>Inicio</a></li>
+    {% for seccion, items in nav_items | groupby('section') %}
+    <li class="menu-seccion">
+      <span class="menu-titulo">{{ seccion }}</span>
+      <ul>
+        {% for item in items %}
+        <li><a href="{{ url_for(item.endpoint) }}" {% if request.endpoint == item.endpoint %}aria-current="page"{% endif %}>{{ item.label }}</a></li>
+        {% endfor %}
+      </ul>
+    </li>
+    {% endfor %}
+  </ul>
+  <form action="{{ url_for('buscar.resultados') }}" method="get" role="search" class="buscador">
+    <label for="q" class="solo-lectores">Buscar en el campus</label>
+    <input id="q" name="q" type="search" placeholder="Buscar…" value="{{ request.args.get('q', '') }}">
+    <button type="submit">Buscar</button>
+  </form>
+</nav>

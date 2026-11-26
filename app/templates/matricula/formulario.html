@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Matrícula · Campus UNEX{% endblock %}
+{% block content %}
+<h1>Matrícula online</h1>
+<p>Paso 1 de 3: elige tus asignaturas. Créditos ya matriculados: <strong>{{ creditos }}</strong> de {{ maximo }} ECTS.</p>
+{% if errores %}<ul role="alert" class="errores">{% for e in errores %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+<form method="post" action="{{ url_for('matricula.revisar') }}" data-autosave="matricula">
+  <fieldset><legend>Asignaturas disponibles</legend>
+    {% for a in asignaturas %}
+    <p><input type="checkbox" id="a-{{ a.codigo }}" name="codigos" value="{{ a.codigo }}" {% if a.codigo in seleccion %}checked{% endif %}>
+       <label for="a-{{ a.codigo }}">{{ a.codigo }} · {{ a.nombre }} ({{ a.creditos }} ECTS) — {{ a.libres }} plazas libres</label></p>
+    {% endfor %}
+  </fieldset>
+  <button type="submit">Revisar matrícula</button>
+</form>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/autosave.js') }}" defer></script>{% endblock %}

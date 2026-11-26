@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Asignaturas · Campus UNEX{% endblock %}
+{% block content %}
+<h1>Asignaturas</h1>
+<table><caption>Oferta de asignaturas</caption>
+<thead><tr><th scope="col">Código</th><th scope="col">Nombre</th><th scope="col">ECTS</th><th scope="col">Curso</th></tr></thead>
+<tbody>{% for a in asignaturas %}
+<tr><td>{{ a.codigo }}</td><td><a href="{{ url_for('asignaturas.detalle', codigo=a.codigo) }}">{{ a.nombre }}</a></td><td>{{ a.creditos }}</td><td>{{ a.curso }}º</td></tr>
+{% endfor %}</tbody></table>
+{% endblock %}
