@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Directorio · Campus UNEX{% endblock %}
+{% block content %}
+<h1>Directorio de perfiles</h1>
+<form method="get" role="search" aria-label="Buscar en el directorio">
+  <label for="q">Nombre</label> <input id="q" name="q" value="{{ q }}">
+  <label for="rol">Rol</label>
+  <select id="rol" name="rol"><option value="">Todos</option>
+    <option value="alumno" {% if rol == 'alumno' %}selected{% endif %}>Alumnos</option>
+    <option value="profesor" {% if rol == 'profesor' %}selected{% endif %}>Profesores</option></select>
+  <button type="submit">Buscar</button>
+</form>
+{% if perfiles %}
+<table><caption>Alumnos y profesores</caption>
+<thead><tr><th scope="col">Nombre</th><th scope="col">Rol</th></tr></thead>
+<tbody>{% for p in perfiles %}<tr><td><a href="{{ url_for('directorio.perfil', user_id=p.id) }}">{{ p.name }}</a></td><td>{{ p.role }}</td></tr>{% endfor %}</tbody></table>
+{% else %}<p>No se han encontrado perfiles.</p>{% endif %}
+{% endblock %}

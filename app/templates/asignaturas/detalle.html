@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}{{ a.nombre }} · Campus UNEX{% endblock %}
+{% block content %}
+<h1>{{ a.nombre }}</h1>
+<dl>
+  <dt>Código</dt><dd>{{ a.codigo }}</dd>
+  <dt>Créditos</dt><dd>{{ a.creditos }} ECTS</dd>
+  <dt>Curso</dt><dd>{{ a.curso }}º</dd>
+  <dt>Plazas</dt><dd>{{ a.plazas }}</dd>
+</dl>
+<h2>Docentes y partes de la asignatura</h2>
+{% if a.docentes %}
+<ul>{% for d in a.docentes %}<li><strong>{{ d.nombre }}</strong> — {{ d.parte }}</li>{% endfor %}</ul>
+{% else %}
+<p>Todavía no hay docentes asignados a esta asignatura.</p>
+{% endif %}
+<p><a href="{{ url_for('asignaturas.lista') }}">Volver al listado</a></p>
+{% endblock %}
