@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Confirmar matrícula · Campus UNEX{% endblock %}
+{% block content %}
+<h1>Confirmar matrícula</h1>
+<p>Paso 2 de 3: revisa tu selección antes de confirmar.</p>
+<table><caption>Asignaturas seleccionadas</caption>
+<thead><tr><th scope="col">Código</th><th scope="col">Asignatura</th><th scope="col">ECTS</th></tr></thead>
+<tbody>{% for a in asignaturas %}<tr><td>{{ a.codigo }}</td><td>{{ a.nombre }}</td><td>{{ a.creditos }}</td></tr>{% endfor %}</tbody></table>
+<p>Total nuevo: <strong>{{ nuevos }} ECTS</strong> · Total tras la matrícula: <strong>{{ total }} ECTS</strong></p>
+<form method="post" action="{{ url_for('matricula.confirmar') }}">
+  {% for a in asignaturas %}<input type="hidden" name="codigos" value="{{ a.codigo }}">{% endfor %}
+  <button type="submit">Confirmar matrícula</button>
+  <a href="{{ url_for('matricula.formulario') }}">Volver y modificar</a>
+</form>
+{% endblock %}
