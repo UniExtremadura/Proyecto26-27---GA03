@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Solicitud ERASMUS · Campus UNEX{% endblock %}
+{% block content %}
+<h1>Solicitud ERASMUS</h1>
+{% if errores %}<ul role="alert" class="errores">{% for e in errores %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+<form method="post">
+  <p><label for="destino">Universidad de destino</label><br>
+    <select id="destino" name="destino" required aria-describedby="ayuda-destino">
+      <option value="">Elige un destino</option>
+      {% for d in destinos %}<option {% if d == destino %}selected{% endif %}>{{ d }}</option>{% endfor %}
+    </select></p>
+  <p id="ayuda-destino">Consulta la oferta de plazas en la oficina de Relaciones Internacionales.</p>
+  <p><label for="motivo">Motivación (mínimo 20 caracteres)</label><br>
+    <textarea id="motivo" name="motivo" rows="6" required minlength="20" maxlength="1000">{{ motivo or '' }}</textarea></p>
+  <button type="submit">Enviar solicitud</button>
+</form>
+<p><a href="{{ url_for('erasmus.estado') }}">Consultar el estado de mi solicitud</a></p>
+<p><a href="{{ url_for('erasmus.documentacion') }}">Dónde y cómo entregar la documentación</a></p>
+{% endblock %}

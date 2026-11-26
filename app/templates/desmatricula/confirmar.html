@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Confirmar baja · Campus UNEX{% endblock %}
+{% block content %}
+<h1>Confirmar baja</h1>
+{% if permitido %}
+<p role="alert">Vas a darte de baja de <strong>{{ m.codigo }} · {{ m.nombre }}</strong>. Esta acción libera tu plaza y no se puede deshacer.</p>
+<form method="post" action="{{ url_for('desmatricula.baja', matricula_id=m.id) }}">
+  <button type="submit">Sí, darme de baja</button>
+  <a href="{{ url_for('desmatricula.lista') }}">Cancelar</a>
+</form>
+{% else %}
+<p role="alert">{{ motivo }}</p>
+<p><a href="{{ url_for('desmatricula.lista') }}">Volver</a></p>
+{% endif %}
+{% endblock %}

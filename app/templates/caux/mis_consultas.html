@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Mis consultas · CAUX{% endblock %}
+{% block content %}
+<h1>Mis consultas a CAUX</h1>
+{% if consultas %}
+<ul>{% for c in consultas %}
+  <li><strong>{{ c.asunto }}</strong> — {{ "Resuelta" if c.estado == "resuelta" else "Pendiente" }}
+    {% if c.respuesta %}<p>{{ c.respuesta }}</p>{% endif %}</li>
+{% endfor %}</ul>
+{% else %}<p>Todavía no has enviado ninguna consulta.</p>{% endif %}
+<p><a href="{{ url_for('caux.pagina') }}">Volver a CAUX</a></p>
+{% endblock %}

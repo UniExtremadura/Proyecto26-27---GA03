@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Documentación ERASMUS{% endblock %}
+{% block content %}
+<h1>Dónde y cómo entregar la documentación</h1>
+<table><caption>Documentos necesarios</caption>
+<thead><tr><th scope="col">Documento</th><th scope="col">Dónde</th><th scope="col">Cómo</th></tr></thead>
+<tbody>{% for d in documentos %}<tr><td>{{ d.documento }}</td><td>{{ d.donde }}</td><td>{{ d.como }}</td></tr>{% endfor %}</tbody></table>
+<p><a href="{{ url_for('erasmus.formulario') }}">Volver al formulario</a></p>
+{% endblock %}
