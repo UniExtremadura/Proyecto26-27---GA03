@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Desmatriculación · Campus UNEX{% endblock %}
+{% block content %}
+<h1>Desmatriculación</h1>
+{% if matriculas %}
+<p>Elige la asignatura de la que quieres darte de baja.</p>
+<ul>{% for m in matriculas %}
+  <li>{{ m.codigo }} · {{ m.nombre }} ({{ m.creditos }} ECTS) —
+    <a href="{{ url_for('desmatricula.confirmacion', matricula_id=m.id) }}">Darme de baja</a></li>
+{% endfor %}</ul>
+{% else %}<p>No tienes matrículas activas.</p>{% endif %}
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Solicitar beca · Campus UNEX{% endblock %}
+{% block content %}
+<h1>Solicitar una beca</h1>
+{% if error %}<p role="alert" class="errores">{{ error }}</p>{% endif %}
+<form method="post">
+  <p><label for="tipo">Tipo de beca</label><br>
+    <select id="tipo" name="tipo" required>{% for t in tipos %}<option>{{ t }}</option>{% endfor %}</select></p>
+  <p><label for="observaciones">Observaciones (opcional)</label><br><textarea id="observaciones" name="observaciones" rows="4" maxlength="1000"></textarea></p>
+  <button type="submit">Enviar solicitud</button>
+</form>
+{% endblock %}

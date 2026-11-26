@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Correo · Campus UNEX{% endblock %}
+{% block content %}
+<h1>Correo de la universidad</h1>
+{% if configurado %}
+  <p><a href="{{ url_for('outlook.conectar') }}">Conectar mi cuenta de Microsoft 365</a></p>
+  <iframe title="Bandeja de entrada de Outlook" src="{{ outlook_url }}" class="outlook" loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"></iframe>
+{% else %}
+  <p role="status">La integración con Microsoft 365 todavía no está configurada en este entorno.</p>
+{% endif %}
+<p><a href="{{ outlook_url }}" target="_blank" rel="noopener noreferrer">Abrir Outlook en una pestaña nueva</a>
+   (alternativa si tu navegador no permite incrustarlo).</p>
+{% endblock %}

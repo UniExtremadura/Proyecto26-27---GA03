@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}{{ e.titulo }} · Campus UNEX{% endblock %}
+{% block content %}
+<h1>{{ e.titulo }}</h1>
+<p>{{ e.descripcion }}</p>
+<dl>
+  <dt>Fecha</dt><dd><time datetime="{{ e.fecha }}">{{ e.fecha }}</time> a las {{ e.hora }}</dd>
+  <dt>Ubicación</dt><dd>{{ e.ubicacion }}</dd>
+  <dt>Organiza</dt><dd>{{ e.organizador }}</dd>
+  <dt>Aforo</dt><dd>{{ e.aforo }} plazas</dd>
+</dl>
+{% if e.enlace_inscripcion %}<p><a href="{{ e.enlace_inscripcion }}">Inscribirme</a></p>{% endif %}
+<p><a href="{{ url_for('eventos.lista') }}">Volver a eventos</a></p>
+{% endblock %}

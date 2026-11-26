@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<img class="banner" src="{{ url_for('static', filename='img/banner.svg') }}" alt="" width="960" height="160">
+<h1>Plataforma digital de la UNEX</h1>
+<p>Bienvenido al campus. Usa el menú para acceder a los servicios.</p>
+{% if nav_items %}
+<ul class="tarjetas">
+  {% for item in nav_items %}
+  <li class="tarjeta"><a href="{{ url_for(item.endpoint) }}">{{ item.label }}</a><span>{{ item.section }}</span></li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

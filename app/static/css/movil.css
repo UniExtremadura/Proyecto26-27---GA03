@@ -1,0 +1,13 @@
+:root { --primario: #0b5c3b; --fondo: #ffffff; --texto: #1f2933; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, sans-serif; color: var(--texto); background: var(--fondo);
+       padding-bottom: calc(4rem + env(safe-area-inset-bottom)); }
+.barra { background: var(--primario); color: #fff; padding: .75rem 1rem; padding-top: calc(.75rem + env(safe-area-inset-top)); }
+.barra h1 { margin: 0; font-size: 1.25rem; }
+main { padding: 1rem; }
+button, input { font-size: 1rem; min-height: 2.75rem; width: 100%; margin: .25rem 0 1rem; }
+button { background: var(--primario); color: #fff; border: 0; border-radius: .5rem; }
+.pestanas { position: fixed; bottom: 0; left: 0; right: 0; display: flex; background: #f3f4f6;
+            padding-bottom: env(safe-area-inset-bottom); border-top: 1px solid #cbd2d9; }
+.pestanas a { flex: 1; text-align: center; padding: 1rem 0; text-decoration: none; color: var(--texto); }
+.tarjeta { border: 1px solid #cbd2d9; border-radius: .75rem; padding: 1rem; margin-bottom: 1rem; }

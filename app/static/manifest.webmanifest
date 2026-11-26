@@ -1,0 +1,10 @@
+{
+  "name": "Campus UNEX",
+  "short_name": "Campus",
+  "start_url": "/m/",
+  "scope": "/m/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0b5c3b",
+  "lang": "es"
+}
