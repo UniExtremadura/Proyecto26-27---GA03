@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Documentos oficiales · Campus UNEX{% endblock %}
+{% block content %}
+<h1>Documentos oficiales</h1>
+<p>Descarga tus documentos sin desplazarte a la secretaría.</p>
+<ul>
+  {% for clave, nombre in tipos.items() %}
+  <li>{{ nombre }} — <a href="{{ url_for('documentos.descargar', tipo=clave) }}" download>Descargar</a></li>
+  {% endfor %}
+</ul>
+{% endblock %}
